@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  svn:
+    image: garethflowers/svn-server
+    container_name: svn-server
+    restart: always
+    ports:
+      - "3690:3690"
+    volumes:
+      - ./data:/var/opt/svn

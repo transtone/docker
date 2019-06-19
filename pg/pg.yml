@@ -1,0 +1,18 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: spt#83d6c33b
+      POSTGRES_USER: sport
+      PGDATA: /var/lib/postgresql/data/pgdata
+      TZ: 'GMT+2'
+      PGTZ: 'GMT+2'
+    volumes:
+      - /opt/docker/pg/data:/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+

@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  svn:
+    image: elleflorio/svn-server:ui
+    container_name: svn-server
+    restart: always
+    ports:
+      - "10080:80"
+      - "3690:3960"
+    volumes:
+      - ./data:/home/svn

@@ -1,0 +1,18 @@
+version: '3'
+services:
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=hnrr
+      - RABBITMQ_DEFAULT_PASS=hnrr2019
+    restart: always
+    ports:
+      - "15672:15672"
+      - "5433:5672"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
