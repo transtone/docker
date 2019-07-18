@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    container_name: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=456j
+      - MYSQL_DATABASE=test
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  redis:
+    image: redis:alpine
+    restart: always
+    container_name: redis
+    command: redis-server --requirepass pwd
+    volumes:
+      - ./data:/data
+    ports:
+      - 6379:6379
