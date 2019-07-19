@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  server:
+    image: tomcat:7
+    restart: always
+    volumes:
+      - ./webapps:/usr/local/tomcat/webapps
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db
+    links:
+      - db
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=test
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - '3306:3306'
