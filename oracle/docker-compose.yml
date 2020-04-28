@@ -1,10 +1,13 @@
 version: '3'
 
-services: 
+services:
   oracle-db:
     image: oracleinanutshell/oracle-xe-11g
+    environment:
+      - ORACLE_ALLOW_REMOTE:true
+      - ORACLE_DISABLE_ASYNCH_IO:true
+    volumes:
+      - /opt/docker/oracle/data:/u01/app/oracle/
     ports:
-      - 5433:1521
+      - 1521:1521
       - 5500:5500
-
-
