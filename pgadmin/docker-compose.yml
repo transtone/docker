@@ -1,12 +1,12 @@
-version: '3.7'
+version: '3.1'
 
 services:
   db:
     image: dpage/pgadmin4
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL=admin@hnrr.com.cn
-      PGADMIN_DEFAULT_PASSWORD=hnrradmin
+      PGADMIN_DEFAULT_EMAIL: admin@hnrr.com.cn
+      PGADMIN_DEFAULT_PASSWORD: hnrradmin
     ports:
       - 5433:80
 
