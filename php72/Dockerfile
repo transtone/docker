@@ -146,12 +146,7 @@ RUN set -ex \
         && echo "${TIMEZONE}" > /etc/timezone \
         #
         # ---------- some config work ----------
-        && addgroup -S ${add_user} \
-        && adduser -D -S -G ${add_user} ${add_user} \
         #
-        # - create user dir
-        && mkdir -p /data \
-        && chown -R ${add_user}:${add_user} /data \
         && mkdir -p /usr/local/etc/ \
         && ln -s /etc/php7/php-fpm.conf /usr/local/etc/php-fpm.conf \
         && ln -s /etc/php7/php-fpm.d /usr/local/etc/php-fpm.d \
@@ -216,7 +211,7 @@ EXPOSE 80
 EXPOSE 443
 EXPOSE 9000
 
-VOLUME ["/usr/local/apache2/htdocs", "/data"]
+VOLUME ["/usr/local/apache2/htdocs"]
 WORKDIR "/usr/local/apache2/htdocs"
 
 CMD ["httpd-foreground"]
