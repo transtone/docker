@@ -19,7 +19,6 @@ LABEL maintainer="stone <zm3345@126.com>" version="1.0"
 ARG timezone
 # pdt pre test dev
 ARG app_env=pdt
-ARG add_user=www
 
 ENV APP_ENV=${app_env:-"pdt"} \
     TIMEZONE=${timezone:-"Asia/Shanghai"} \
@@ -156,6 +155,20 @@ RUN set -ex \
         && mkdir -p /usr/local/etc/ \
         && ln -s /etc/php7/php-fpm.conf /usr/local/etc/php-fpm.conf \
         && ln -s /etc/php7/php-fpm.d /usr/local/etc/php-fpm.d \
+        && cd /etc/php7 \
+        && { \
+            echo "[global]"; \
+            echo "pid = /var/run/php-fpm.pid"; \
+            echo "[www-data]"; \
+            echo "user = www-data"; \
+            echo "group = www-data"; \
+        } | tee php-fpm.d/custom.conf \
+        # - config site
+        && sed -i 's/127.0.0.1:9000/0.0.0.0:9000/g' /etc/php7/php-fpm.d/www.conf \
+        && echo "alias ls='ls -lhG --color=auto'" >> /root/.bashrc \
+        && echo "alias ll='ls -lhG --color=auto'" >> /root/.bashrc \
+        && chmod 755 /root/.bashrc \
+        && . /root/.bashrc \
         #
         && echo -e "\033[42;37m Build Completed :).\033[0m\n"
 
@@ -197,7 +210,13 @@ RUN cd /tmp \
     && rm -Rf ioncube.tar.gz ioncube \
     && echo "zend_extension=ioncube.so" > /etc/php7/conf.d/00_ioncube.ini        
 
+COPY httpd-foreground /usr/local/bin/
+
+EXPOSE 80
+EXPOSE 443
 EXPOSE 9000
 
 VOLUME ["/usr/local/apache2/htdocs", "/data"]
 WORKDIR "/usr/local/apache2/htdocs"
+
+CMD ["httpd-foreground"]
