@@ -1,0 +1,16 @@
+FROM foxiswho/php-alpine:php72-fpm 
+LABEL maintainer="stone <zm3345@126.com>" version="1.0"
+
+COPY ./ioncube_loaders_lin_x86-64.tar.gz /tmp
+
+RUN cd /tmp \
+    && tar -xvzf ioncube_loaders_lin_x86-64.tar.gz -C /tmp \
+    && cp ioncube/ioncube_loader_lin_7.2.so  /usr/lib/php7/modules/ioncube.so \
+    && rm -Rf ioncube.tar.gz ioncube \
+    && echo "zend_extension=ioncube.so" > /etc/php7/conf.d/00_ioncube.ini
+
+EXPOSE 9000
+VOLUME ["/var/www", "/data"]
+WORKDIR "/var/www"
+
+CMD /run.sh
