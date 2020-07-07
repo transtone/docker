@@ -199,5 +199,5 @@ RUN cd /tmp \
 
 EXPOSE 9000
 
-VOLUME ["/var/www", "/data"]
-WORKDIR "/var/www"
+VOLUME ["/usr/local/apache2/htdocs", "/data"]
+WORKDIR "/usr/local/apache2/htdocs"
