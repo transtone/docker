@@ -174,10 +174,9 @@ RUN set -ex \
         #
         && pecl install seaslog \
         && echo "extension=seaslog.so" > /etc/php7/conf.d/20_seaslog.ini  \
-        && pecl install swoole \
-        && echo "extension=swoole.so" > /etc/php7/conf.d/20_swoole.ini  \
-        #
-        && echo "extension=swoole.so" > /etc/php7/conf.d/20_swoole.ini \
+        # && pecl install swoole \
+        # && echo "extension=swoole.so" > /etc/php7/conf.d/20_swoole.ini  \
+        # && echo "extension=swoole.so" > /etc/php7/conf.d/20_swoole.ini \
         && curl -sS https://getcomposer.org/installer | php \
         && mv composer.phar /usr/local/bin/ \
         && chmod 755 /usr/local/bin/composer.phar \
