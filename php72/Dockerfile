@@ -8,7 +8,7 @@
 # @build-example docker build . -f alphp-base.Dockerfile -t alphp/alphp:base
 #
 
-FROM httpd:2-alpine
+FROM httpd:2.4.38-alpine
 LABEL maintainer="stone <zm3345@126.com>" version="1.0"
 
 ##
@@ -46,8 +46,8 @@ RUN set -ex \
         curl \
         tar \
         xz \
-        libressl \
         # openssh  \
+        libressl \
         openssl  \
         tzdata \
         pcre \
@@ -111,7 +111,6 @@ RUN set -ex \
         php7-sockets \
         php7-soap \
         php7-sqlite3 \
-        php7-ssh2 \
         php7-sysvshm \
         php7-sysvmsg \
         php7-sysvsem \
@@ -147,6 +146,7 @@ RUN set -ex \
         #
         # ---------- some config work ----------
         #
+        # - create user dir
         && mkdir -p /usr/local/etc/ \
         && ln -s /etc/php7/php-fpm.conf /usr/local/etc/php-fpm.conf \
         && ln -s /etc/php7/php-fpm.d /usr/local/etc/php-fpm.d \
@@ -177,14 +177,8 @@ RUN set -ex \
         && apk update \
         && apk add --no-cache --virtual .phpize-deps \
         $PHPIZE_DEPS \
-        openssl-dev \
+        openssl-dev  \
         libaio linux-headers libaio-dev \
-        #
-        && pecl install seaslog \
-        && echo "extension=seaslog.so" > /etc/php7/conf.d/20_seaslog.ini  \
-        # && pecl install swoole \
-        # && echo "extension=swoole.so" > /etc/php7/conf.d/20_swoole.ini  \
-        # && echo "extension=swoole.so" > /etc/php7/conf.d/20_swoole.ini \
         && curl -sS https://getcomposer.org/installer | php \
         && mv composer.phar /usr/local/bin/ \
         && chmod 755 /usr/local/bin/composer.phar \
@@ -205,13 +199,9 @@ RUN cd /tmp \
     && rm -Rf ioncube.tar.gz ioncube \
     && echo "zend_extension=ioncube.so" > /etc/php7/conf.d/00_ioncube.ini        
 
-COPY httpd-foreground /usr/local/bin/
-
 EXPOSE 80
 EXPOSE 443
 EXPOSE 9000
 
-VOLUME ["/usr/local/apache2/htdocs"]
+VOLUME ["/usr/local/apache2/htdocs", "/data"]
 WORKDIR "/usr/local/apache2/htdocs"
-
-CMD ["httpd-foreground"]

@@ -1,25 +1,25 @@
 version: "3"
 services:
-  php:
-    build: ./php
-    container_name: php
+  phpttpd:
+    build: .
+    container_name: httpd
     ports:
       - "4507:443"
-    expose:
-      - "9000"
+      - "4508:80"
     volumes:
       - ./www/public:/usr/local/apache2/htdocs/
+      - ./conf/apache2/httpd-foreground:/usr/local/bin/httpd-foreground
       - ./conf/apache2/vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
       - ./conf/apache2/httpd-ssl.conf:/usr/local/apache2/conf/extra/httpd-ssl.conf
       - ./conf/apache2/httpd.conf:/usr/local/apache2/conf/httpd.conf
       - ./conf/apache2/cert:/usr/local/apache2/conf/cert
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./conf/php/www.conf:/etc/php7/php-fpm.d/www.conf
       - ./logs/apache2:/var/log/apache2
       - ./logs/php:/usr/local/var/log:rw
     networks:
       - net-mysql
     restart: always
-    #command: php-fpm
 
   mysql:
     image: mysql:5.7
@@ -39,5 +39,4 @@ services:
     restart: always
 
 networks:
-  net-php:
   net-mysql:
