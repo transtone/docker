@@ -1,11 +1,10 @@
 version: "3"
 services:
-
   mysql:
-    image: mysql:5.7
-    container_name: mysql
+    image: mysql
+    container_name: mysql8
     volumes:
-      - ./conf/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+#    - ./conf/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
       - ./data/:/var/lib/mysql:rw
     ports:
       - "3306:3306"
@@ -16,3 +15,12 @@ services:
       MYSQL_PASSWORD: xxgc3306
     restart: always
 
+  redis:
+    image: redis:alpine
+    restart: always
+    container_name: redis
+    #    command: redis-server --requirepass pwd
+    volumes:
+      - ./data:/data
+    ports:
+      - 6379:6379
