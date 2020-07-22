@@ -1,0 +1,12 @@
+version: "3"
+services:
+  activemq:
+    image: rmohr/activemq:5.15.9-alpine
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 61616:61616
+      - 8161:8161
+    volumes:
+      - ./data/activemq:/data/activemq
+      - ./var/log/activemq:/var/log/activemq
