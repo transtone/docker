@@ -99,4 +99,3 @@ sw.*
 */**/application-release.properties
 */**/*.jar
 */**/*.retry
-*/**/data
