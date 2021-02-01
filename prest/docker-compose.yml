@@ -1,0 +1,9 @@
+version: "3"
+services:
+    prest:
+        image: prest/prest:v1.0.5
+        volumes:
+          - ./data/prest.toml:/app/prest.toml
+          - ./data/queries:/app/queries
+        network_mode: host
+
