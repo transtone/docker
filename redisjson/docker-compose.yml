@@ -1,0 +1,10 @@
+version: "3"
+services:
+  redis:
+    image: redislabs/rejson:2.2.0
+    container_name: rejson
+    command: redis-server --loadmodule /usr/lib/redis/modules/rejson.so --requirepass Redis@test
+    volumes:
+      - ./data:/data
+    ports:
+      - "6379:6379"
