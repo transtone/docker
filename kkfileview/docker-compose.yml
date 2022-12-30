@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  redis:
+    image: keking/kkfileview
+    container_name: my-kkfile-view
+    ports:
+      - "8012:8012"
